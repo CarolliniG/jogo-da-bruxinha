@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://tbeljqide2si" path="res://cenario_grama.tscn" id="1_tr6oq"]
 [ext_resource type="PackedScene" uid="uid://dlqr8lxf7kn4a" path="res://player.tscn" id="2_m7tbw"]
-[ext_resource type="Script" uid="uid://oxhi6dk1ug43" path="res://tomate.gd" id="3_7cuts"]
+[ext_resource type="Script" path="res://scripts/Collectible.gd" id="3_7cuts"]
 [ext_resource type="Texture2D" uid="uid://dyd23v75o7fum" path="res://assets/itens/Crop_Spritesheet.png" id="3_rrtif"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_7cuts"]
