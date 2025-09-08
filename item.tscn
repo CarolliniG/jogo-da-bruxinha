@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3 uid="uid://c6xwx520gwayh"]
+
+[sub_resource type="GDScript" id="GDScript_vpy52"]
+script/source = "extends Area2D
+
+@export var item_texture: Texture
+
+func _ready():
+	$Sprite2D.texture = item_texture
+
+func _on_body_entered(body):
+	if body.name == \"Player\":
+		body.get_node(\"InventoryUI\").add_item(item_texture)
+		queue_free()  # Remove o item do chão
+"
+
+[node name="Item" type="Area2D"]
+script = SubResource("GDScript_vpy52")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

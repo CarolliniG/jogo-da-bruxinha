@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=3 uid="uid://fuo4iryghps8"]
+
+[ext_resource type="PackedScene" uid="uid://tbeljqide2si" path="res://cenario_grama.tscn" id="1_tr6oq"]
+[ext_resource type="PackedScene" uid="uid://dlqr8lxf7kn4a" path="res://player.tscn" id="2_m7tbw"]
+[ext_resource type="Script" uid="uid://oxhi6dk1ug43" path="res://tomate.gd" id="3_7cuts"]
+[ext_resource type="Texture2D" uid="uid://dyd23v75o7fum" path="res://assets/itens/Crop_Spritesheet.png" id="3_rrtif"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7cuts"]
+atlas = ExtResource("3_rrtif")
+region = Rect2(80, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_emcp4"]
+atlas = ExtResource("3_rrtif")
+region = Rect2(64, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ep5lw"]
+atlas = ExtResource("3_rrtif")
+region = Rect2(48, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jpj0s"]
+atlas = ExtResource("3_rrtif")
+region = Rect2(32, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vwsrf"]
+atlas = ExtResource("3_rrtif")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlig8"]
+atlas = ExtResource("3_rrtif")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xrbya"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7cuts")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_emcp4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ep5lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jpj0s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vwsrf")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qlig8")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ommbi"]
+size = Vector2(19, 18)
+
+[node name="principal" type="Node2D"]
+
+[node name="cenario_grama" parent="." instance=ExtResource("1_tr6oq")]
+
+[node name="player" parent="cenario_grama" instance=ExtResource("2_m7tbw")]
+z_index = 1
+position = Vector2(340, 324)
+
+[node name="Camera2D" type="Camera2D" parent="cenario_grama/player"]
+position = Vector2(11, -28)
+zoom = Vector2(3, 3)
+position_smoothing_enabled = true
+
+[node name="tomate" type="Area2D" parent="."]
+position = Vector2(242, 369)
+monitorable = false
+script = ExtResource("3_7cuts")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="tomate"]
+position = Vector2(18, 2)
+sprite_frames = SubResource("SpriteFrames_xrbya")
+frame = 5
+frame_progress = 0.0815295
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="tomate"]
+position = Vector2(18.5, 2)
+shape = SubResource("RectangleShape2D_ommbi")
+
+[connection signal="body_entered" from="tomate" to="tomate" method="_on_body_entered"]

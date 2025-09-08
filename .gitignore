@@ -1,0 +1,12 @@
+# Godot 4+
+.godot/
+export/
+export-presets.cfg
+*.import
+*.translation
+*.tscn.local
+*.escn
+*.csproj
+*.sln
+addons/
+
