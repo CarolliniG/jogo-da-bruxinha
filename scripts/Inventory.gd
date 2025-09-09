@@ -34,5 +34,5 @@ func use_item(slot: int):
         # Here you would add the logic for using the item
         print("Using item: " + item.name)
 
-        if item.consumable:
+        if item.item_type == Item.ItemType.CONSUMABLE or item.item_type == Item.ItemType.SEED:
             remove_item(slot)
