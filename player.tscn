@@ -1,6 +1,8 @@
 [gd_scene load_steps=33 format=3 uid="uid://dlqr8lxf7kn4a"]
 
 [ext_resource type="Texture2D" uid="uid://50suwv8c55pg" path="res://assets/player/walk and idle.png" id="1_4flbx"]
+[ext_resource type="PackedScene" uid="uid://b1v2w3x4y5z6" path="res://InventoryUI.tscn" id="2_ui"]
+[ext_resource type="Script" path="res://scripts/Inventory.gd" id="3_inv"]
 
 [sub_resource type="GDScript" id="GDScript_4flbx"]
 script/source = "extends CharacterBody2D
@@ -9,6 +11,16 @@ script/source = "extends CharacterBody2D
 const SPEED = 100.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var inventory: Inventory = $Inventory
+@onready var inventory_ui: CanvasLayer = $InventoryUI
+
+func _ready():
+	inventory_ui.set_inventory(inventory)
+
+func _unhandled_input(event):
+	if event.is_action_pressed(\"toggle_inventory\"):
+		inventory_ui.toggle()
+		get_viewport().set_input_as_handled()
 
 func _physics_process(delta):
 	var input_vector = Vector2(
@@ -31,8 +43,8 @@ func get_direction_name(vec: Vector2) -> String:
 	else:
 		return \"down\" if vec.y > 0 else \"up\"
 
-
-#inventário
+func get_inventory() -> Inventory:
+	return inventory
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_onrkg"]
@@ -274,3 +286,8 @@ autoplay = "idle"
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(2, 1.5)
 shape = SubResource("RectangleShape2D_4flbx")
+
+[node name="Inventory" type="Node" parent="."]
+script = ExtResource("3_inv")
+
+[node name="InventoryUI" parent="." instance=ExtResource("2_ui")]
