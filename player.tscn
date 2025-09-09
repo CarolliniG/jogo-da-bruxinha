@@ -13,14 +13,25 @@ const SPEED = 100.0
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var inventory: Inventory = $Inventory
 @onready var inventory_ui: CanvasLayer = $InventoryUI
+@onready var hand_sprite: Sprite2D = $HandSprite
+
+var current_item: Item = null
 
 func _ready():
 	inventory_ui.set_inventory(inventory)
+	inventory_ui.item_selected.connect(_on_item_selected)
+	hand_sprite.visible = false
 
 func _unhandled_input(event):
 	if event.is_action_pressed(\"toggle_inventory\"):
 		inventory_ui.toggle()
 		get_viewport().set_input_as_handled()
+		return
+
+	if event.is_action_pressed("use_item"):
+		if current_item:
+			use_current_item()
+			get_viewport().set_input_as_handled()
 
 func _physics_process(delta):
 	var input_vector = Vector2(
@@ -45,6 +56,36 @@ func get_direction_name(vec: Vector2) -> String:
 
 func get_inventory() -> Inventory:
 	return inventory
+
+func _on_item_selected(item: Item):
+	current_item = item
+	if current_item:
+		hand_sprite.texture = current_item.texture
+		hand_sprite.visible = true
+	else:
+		hand_sprite.visible = false
+
+func use_current_item():
+	if not current_item:
+		return
+
+	match current_item.item_type:
+		Item.ItemType.CONSUMABLE:
+			print("Consumed item: " + current_item.name)
+			var selected_slot = inventory_ui.selected_slot
+			if selected_slot != -1:
+				inventory.remove_item(selected_slot)
+
+		Item.ItemType.SEED:
+			print("Planted seed: " + current_item.name)
+			# Placeholder for planting logic
+			var selected_slot = inventory_ui.selected_slot
+			if selected_slot != -1:
+				inventory.remove_item(selected_slot)
+
+		Item.ItemType.TOOL:
+			print("Used tool: " + current_item.name)
+			# Tool is not consumed.
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_onrkg"]
@@ -291,3 +332,7 @@ shape = SubResource("RectangleShape2D_4flbx")
 script = ExtResource("3_inv")
 
 [node name="InventoryUI" parent="." instance=ExtResource("2_ui")]
+
+[node name="HandSprite" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(8, -8)

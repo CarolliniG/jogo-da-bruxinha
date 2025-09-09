@@ -9,7 +9,7 @@ func _ready():
         # This is a workaround for not being able to create .tres files easily.
         var new_item = Item.new()
         new_item.name = "Tomato"
-        new_item.consumable = true
+        new_item.item_type = Item.ItemType.CONSUMABLE
         new_item.stackable = true
         # We still have the texture problem.
         # I'll load the spritesheet and maybe I can create an AtlasTexture in code.
