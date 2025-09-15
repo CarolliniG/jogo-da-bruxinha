@@ -73,15 +73,20 @@ func _update_display():
 
 func _on_slot_gui_input(event: InputEvent, slot_index: int):
     if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
-        # If clicking the already selected slot, deselect it
-        if selected_slot == slot_index:
-            selected_slot = -1
-            item_selected.emit(null)
-        else:
-            selected_slot = slot_index
-            item_selected.emit(inventory.items[selected_slot])
+        select_slot(slot_index)
 
-        _update_selection_visuals()
+func select_slot(slot_index: int):
+    if slot_index < 0 or slot_index >= inventory.items.size():
+        return
+
+    if selected_slot == slot_index:
+        selected_slot = -1
+        item_selected.emit(null)
+    else:
+        selected_slot = slot_index
+        item_selected.emit(inventory.items[slot_index])
+
+    _update_selection_visuals()
 
 func _update_selection_visuals():
     for i in range(grid_container.get_child_count()):

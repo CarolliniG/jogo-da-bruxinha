@@ -32,6 +32,16 @@ func _unhandled_input(event):
 		if current_item:
 			use_current_item()
 			get_viewport().set_input_as_handled()
+		return
+
+	if event is InputEventKey and event.is_pressed() and not event.is_echo():
+		var key_code = event.keycode
+		if key_code >= KEY_1 and key_code <= KEY_9:
+			inventory_ui.select_slot(key_code - KEY_1)
+			get_viewport().set_input_as_handled()
+		elif key_code == KEY_0:
+			inventory_ui.select_slot(9)
+			get_viewport().set_input_as_handled()
 
 func _physics_process(delta):
 	var input_vector = Vector2(
