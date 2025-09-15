@@ -8,6 +8,7 @@ enum ToolType { STAFF, SWORD, HOE, WATERING_CAN, SCYTHE }
 @export var name: String = ""
 @export var texture: Texture2D
 @export var stackable: bool = false
+@export var max_stack_size: int = 1
 @export var item_type: ItemType = ItemType.FOOD
 
 # Food properties
