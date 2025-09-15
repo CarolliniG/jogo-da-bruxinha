@@ -31,8 +31,21 @@ func remove_item(slot: int):
 func use_item(slot: int):
     if slot >= 0 and slot < items.size() and items[slot] != null:
         var item = items[slot]
-        # Here you would add the logic for using the item
         print("Using item: " + item.name)
 
-        if item.item_type == Item.ItemType.CONSUMABLE or item.item_type == Item.ItemType.SEED:
-            remove_item(slot)
+        match item.item_type:
+            Item.ItemType.FOOD:
+                get_parent().get_node("Stats").eat(item.health_restored)
+                remove_item(slot)
+            Item.ItemType.POTION:
+                # Logic for using potion
+                remove_item(slot)
+            Item.ItemType.SEED:
+                # Logic for using seed
+                remove_item(slot)
+            Item.ItemType.TOOL:
+                # Logic for using tool
+                pass
+            Item.ItemType.OTHER:
+                # Logic for using other
+                pass

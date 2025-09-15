@@ -1,24 +1,18 @@
-[gd_scene load_steps=2 format=3 uid="uid://c6xwx520gwayh"]
+[gd_scene load_steps=4 format=3 uid="uid://c6xwx520gwayh"]
 
-[sub_resource type="GDScript" id="GDScript_vpy52"]
-script/source = "extends Area2D
+[ext_resource type="Script" path="res://scripts/Collectible.gd" id="1_vpy52"]
+[ext_resource type="Resource" path="res://scripts/resources/Tomato.tres" id="2_tomato"]
 
-@export var item_texture: Texture
-
-func _ready():
-	$Sprite2D.texture = item_texture
-
-func _on_body_entered(body):
-	if body.name == \"Player\":
-		body.get_node(\"InventoryUI\").add_item(item_texture)
-		queue_free()  # Remove o item do chão
-"
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_abcde"]
+size = Vector2(16, 16)
 
 [node name="Item" type="Area2D"]
-script = SubResource("GDScript_vpy52")
+script = ExtResource("1_vpy52")
+item = ExtResource("2_tomato")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_abcde")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
