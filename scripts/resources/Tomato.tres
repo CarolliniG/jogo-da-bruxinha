@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="Item" load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/Item.gd" id="1_item_script"]
+[ext_resource type="Texture2D" uid="uid://caak753wfxepn" path="res://assets/itens/Crop_Spritesheet.png" id="2_crop_spritesheet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tomato"]
+atlas = ExtResource("2_crop_spritesheet")
+region = Rect2(0, 32, 16, 16)
+
+[resource]
+script = ExtResource("1_item_script")
+name = "Tomato"
+texture = SubResource("AtlasTexture_tomato")
+stackable = true
+item_type = 0 # FOOD
+health_restored = 10
+energy_restored = 5
+effects = {}
+tool_type = 1 # SWORD (default, not used for food)
