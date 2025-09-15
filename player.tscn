@@ -28,9 +28,9 @@ func _unhandled_input(event):
 		get_viewport().set_input_as_handled()
 		return
 
-	if event.is_action_pressed("use_item"):
-		if current_item:
-			use_current_item()
+	if event.is_action_pressed(\"use_item\"):
+		if inventory_ui.selected_slot != -1:
+			inventory.use_item(inventory_ui.selected_slot)
 			get_viewport().set_input_as_handled()
 		return
 
@@ -74,28 +74,6 @@ func _on_item_selected(item: Item):
 		hand_sprite.visible = true
 	else:
 		hand_sprite.visible = false
-
-func use_current_item():
-	if not current_item:
-		return
-
-	match current_item.item_type:
-		Item.ItemType.CONSUMABLE:
-			print("Consumed item: " + current_item.name)
-			var selected_slot = inventory_ui.selected_slot
-			if selected_slot != -1:
-				inventory.remove_item(selected_slot)
-
-		Item.ItemType.SEED:
-			print("Planted seed: " + current_item.name)
-			# Placeholder for planting logic
-			var selected_slot = inventory_ui.selected_slot
-			if selected_slot != -1:
-				inventory.remove_item(selected_slot)
-
-		Item.ItemType.TOOL:
-			print("Used tool: " + current_item.name)
-			# Tool is not consumed.
 "
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_onrkg"]
